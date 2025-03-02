@@ -113,13 +113,13 @@ func (r *Resp) Read() (Value, error) {
 	}
 
 	switch _type {
-	case ARRAY:
-		return r.readArray()
-	case BULK:
-		return r.readBulk()
-	default:
-		fmt.Printf("UNKNOWN TYPE: %v", string(_type))
-		return Value{}, nil
+		case ARRAY:
+			return r.readArray()
+		case BULK:
+			return r.readBulk()
+		default:
+			fmt.Printf("UNKNOWN TYPE: %v", string(_type))
+			return Value{}, nil
 	}
 }
 
