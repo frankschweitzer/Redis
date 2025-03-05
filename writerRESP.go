@@ -3,6 +3,7 @@ package main
 import (
 	"io"
 	"strconv"
+	"fmt"
 )
 
 type Writer struct {
@@ -43,6 +44,8 @@ func (v Value) Marshal() []byte {
 }
 
 func (v Value) marshalString() []byte {
+	fmt.Println("MARSHAL STRING")
+
 	var bytes []byte
 
 	bytes = append(bytes, STRING)
@@ -53,6 +56,8 @@ func (v Value) marshalString() []byte {
 }
 
 func (v Value) marshalBulk() []byte {
+	fmt.Println("MARSHAL BULK")
+
 	var bytes []byte
 
 	bytes = append(bytes, BULK)
@@ -65,6 +70,8 @@ func (v Value) marshalBulk() []byte {
 }
 
 func (v Value) marshalArray() []byte {
+	fmt.Println("MARSHAL ARRAY")
+
 	var bytes []byte
 
 	bytes = append(bytes, ARRAY)
@@ -79,6 +86,8 @@ func (v Value) marshalArray() []byte {
 }
 
 func (v Value) marshalError() []byte {
+	fmt.Println("MARSHAL ERROR")
+
 	var bytes []byte
 
 	bytes = append(bytes, ERROR)
@@ -89,5 +98,6 @@ func (v Value) marshalError() []byte {
 }
 
 func (v Value) marshalNull() []byte {
+	fmt.Println("MARSHAL NULL")
 	return []byte("$-1\r\n")
 }

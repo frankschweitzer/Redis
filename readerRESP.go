@@ -34,6 +34,8 @@ func NewResp(rd io.Reader) *Resp {
 }
 
 func (r *Resp) readLine() (line []byte, n int, err error) {
+	fmt.Println("READ LINE")
+
 	// read byte by byte until reaching \r (indicating EOL)
 	for {
 		b, err := r.reader.ReadByte()
@@ -52,6 +54,8 @@ func (r *Resp) readLine() (line []byte, n int, err error) {
 }
 
 func (r *Resp) readInteger() (x int, n int, err error) {
+	fmt.Println("READ INTEGER")
+
 	line, n, err := r.readLine()
 	if err != nil {
 		return 0, 0, err
@@ -66,6 +70,8 @@ func (r *Resp) readInteger() (x int, n int, err error) {
 }
 
 func (r *Resp) readArray() (Value, error) {
+	fmt.Println("READ ARRAY")
+
 	v := Value{}
 	v.typ = "array"
 
@@ -88,6 +94,8 @@ func (r *Resp) readArray() (Value, error) {
 }
 
 func (r *Resp) readBulk() (Value, error) {
+	fmt.Println("READ BULK")
+
 	v := Value{}
 	v.typ = "bulk"
 
