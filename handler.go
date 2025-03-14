@@ -2,6 +2,7 @@ package main
 
 import (
 	"sync"
+	"fmt"
 )
 
 var MAP = map[string]string{}
@@ -11,11 +12,12 @@ var HMAP = map[string]map[string]string{}
 var HMAPmu = sync.RWMutex{}
 
 var Handlers = map[string]func([]Value) Value{
-	"PING" : ping,
-	"SET" : set,
-	"GET" : get,
-	"HSET" : hset,
-	"HGET" : hget,
+	"PING"    : ping,
+	"SET"     : set,
+	"GET"     : get,
+	"HSET"    : hset,
+	"HGET"    : hget,
+	"HGETALL" : hgetall,
 }
 
 func ping(args []Value) Value {
@@ -93,4 +95,27 @@ func hget(args []Value) Value {
 	}
 
 	return Value{typ:"bulk", bulk:value}
+}
+
+func hgetall(args []Value) Value {
+	if len(args) != 1 {
+		return Value{typ:"error", str:"ERROR: WRONG NUMBER OF ARGUMENTS"}
+	}
+
+	table := args[0].bulk
+
+	HMAPmu.Lock()
+	valueMap, ok := HMAP[table]
+	HMAPmu.Unlock()
+	if !ok {
+		return Value{typ:"error", str:"ERROR: COULD NOT GET FROM HASH"}
+	}
+
+	values := []Value{}
+	for k, v := range valueMap {
+		fmt.Println("key: ", k, "value: ", v)
+		values = append(values, Value{typ:"string", str:v})
+	}
+
+	return Value{typ:"array", array:values}
 }
