@@ -28,7 +28,7 @@ redis-cli
 
 My version supports: **SET**, **GET**, **HSET**, **HGET**, **HGETALL**. The commands are __not__ case sensitive.
 
-## Enhancements
+## Future Enhancements
 
 - Include more detailed error handling
 - Data persistence when the server stops running
